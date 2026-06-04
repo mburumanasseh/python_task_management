@@ -1,12 +1,10 @@
-import sys
-import os
-sys.path.insert(0, os.path.dirname(__file__))
+# Import functions from task_manager.task_utils package
+from task_manager.task_utils import add_task, mark_task_as_complete, view_pending_tasks, calculate_progress
 
-from task_utils import add_task, mark_task_as_complete, view_pending_tasks, calculate_progress
-
+# Define the main function
 def main():
     while True:
-        print("\nTask Management System")
+        print("Task Management System")
         print("1. Add Task")
         print("2. Mark Task as Complete")
         print("3. View Pending Tasks")
@@ -15,31 +13,24 @@ def main():
         choice = input("Enter your choice (1-5): ")
 
         if choice == "1":
-            title = input("Enter task title: ")
-            description = input("Enter task description: ")
-            due_date = input("Enter due date (YYYY-MM-DD): ")
-            add_task(title, description, due_date)
-
-        elif choice == "2":
-            view_pending_tasks()
+            add_task(title=input("Enter task title: "),
+                     description=input("Enter task description: "),
+                     due_date=input("Enter task due date (YYYY-MM-DD): "))
+        elif choice == "2":    
             try:
-                index = int(input("Enter task number to mark as complete: "))
+                index = int(input("Enter the index of the task to mark as complete: "))
                 mark_task_as_complete(index)
             except ValueError:
-                print("Please enter a valid number.")
-
-        elif choice == "3":
+                print("Invalid index. Please enter a numeric task index.")
+        elif choice == "3":    
             view_pending_tasks()
-
         elif choice == "4":
-            calculate_progress()
-
+            print(f"Progress: {calculate_progress():.2f}%")
         elif choice == "5":
             print("Exiting the program...")
             break
-
         else:
             print("Invalid choice. Please try again.")
-
+        
 if __name__ == "__main__":
     main()
