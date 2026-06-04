@@ -24,16 +24,19 @@ def add_task(title, description, due_date):
     print("Task added successfully!")
 
 def mark_task_as_complete(index, tasks=tasks):
-    if index < 1 or index > len(tasks):
-        print("Invalid task number.")
-        return
-    tasks[index - 1]["completed"] = True
-    print("Task marked as complete!")
+    try:
+        if index < 1 or index > len(tasks):
+            print("Invalid task number.")
+            return
+        tasks[index - 1]["completed"] = True
+        print("Task marked as complete!")
+    except ValueError:
+        print("Please enter a valid number.")
 
 def view_pending_tasks(tasks=tasks):
     pending = [task for task in tasks if not task["completed"]]
 
-    if not pending:
+    if len(pending) == 0:
         print("No pending tasks.")
         return
 
@@ -48,16 +51,10 @@ def view_pending_tasks(tasks=tasks):
 def calculate_progress(tasks=tasks):
     total = len(tasks)
     if total == 0:
-        progress = 0
+        progress = 0.0
     else:
         completed = len([task for task in tasks if task["completed"]])
         progress = (completed / total) * 100
 
-    print("\nProgress Tracker:")
-    print("-" * 45)
-    print(f"Total tasks:     {total}")
-    print(f"Completed tasks: {len([t for t in tasks if t['completed']])}")
-    print(f"Pending tasks:   {len([t for t in tasks if not t['completed']])}")
-    print(f"Completion:      {progress:.1f}%")
-    print("-" * 45)
+    print(progress)
     return progress
